@@ -1,0 +1,104 @@
+:root {
+    /* 🎨 Colores */
+    --color-primario: #2ccc74;
+    --color-primario-oscuro: #23a861;
+    --color-secundario: #444;
+    --color-texto: #333;
+    --color-fondo: #f5f5f5;
+    --color-blanco: #ffffff;
+    --color-gris: #6c757d;
+    --sombra: 0 5px 15px rgba(0, 0, 0, 0.08);
+
+    /* 🔠 Tipografías */
+    --fuente-principal: "Poppins", "Segoe UI", "Roboto", sans-serif;
+    --fuente-secundaria: "Roboto", sans-serif;
+
+    /* 📏 Tamaños de fuente */
+    --fs-h1: 2.5rem;
+    --fs-h2: 2rem;
+    --fs-h3: 1.5rem;
+    --fs-texto: 1rem;
+    --fs-small: 0.875rem;
+}
+
+.inicio {
+    max-width: 800px;
+    margin: 80px auto;
+    padding: 40px;
+    background: var(--color-blanco);
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    text-align: center;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+.inicio h1 {
+    font-size: var(--fs-h1);
+    font-weight: bold;
+    color: var(--color-primario);
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.inicio p {
+    font-size: var(--fs-texto);
+    color: var(--color-texto);
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.inicio ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.inicio li {
+    background: var(--color-blanco);
+    color: var(--color-texto);
+    font-size: var(--fs-texto);
+    box-shadow: var(--sombra);
+    padding: 8px 18px;
+    border-radius: 25px;
+    font-size: 1rem;
+    box-shadow: var(--sombra);
+    transition: transform 0.3s ease, background 0.3s ease;
+    cursor: default;
+}
+
+.inicio li:hover {
+    transform: scale(1.1);
+    
+}
+
+
+.icono {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.inicio li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+/* Animación de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+

@@ -1,0 +1,20 @@
+{% extends 'base_main.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'style/error.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <div class="error-content">
+        <img src="{% static 'img/404.gif' %}" alt="404 Error" class="error-gif">
+        <h1>404</h1>
+        <p>¡Ups! Te perdiste 😅</p>
+        <p class="funny-msg">
+            Aquí no hay nada... intenta regresar al inicio antes de caer en un agujero negro 🌀
+        </p>
+        <a href="{% url 'home' %}" class="btn-home">Volver al inicio</a>
+    </div>
+</div>
+{% endblock %}

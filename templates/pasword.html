@@ -1,0 +1,104 @@
+{% extends 'base_main.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'style/password.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="password-container">
+    <h1>Generador de Contraseñas Seguras</h1>
+
+    <div class="password-card">
+        <label for="length-input">Longitud (mínimo 12 caracteres):</label>
+        <input type="number" id="length-input" min="12" value="12">
+
+        <button id="generate-btn"><i class="fas fa-key"></i> Generar Contraseña</button>
+
+        <div class="password-output">
+            <input type="text" id="password-output" readonly placeholder="Tu contraseña segura aparecerá aquí">
+            <button id="copy-btn"><i class="fas fa-copy"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast">
+    <i id="toast-icon"></i>
+    <div id="toast-message"></div>
+    <button id="toast-close" onclick="closeToast()">✖</button>
+</div>
+
+
+<script>
+const generateBtn = document.getElementById("generate-btn");
+const copyBtn = document.getElementById("copy-btn");
+const passwordOutput = document.getElementById("password-output");
+const lengthInput = document.getElementById("length-input");
+
+generateBtn.addEventListener("click", () => {
+    const length = parseInt(lengthInput.value);
+    if(length < 12){
+        showToast("La longitud mínima es 12 caracteres", 1000, "error");
+        return;
+    }
+    const password = generatePassword(length);
+    passwordOutput.value = password;
+});
+
+copyBtn.addEventListener("click", () => {
+    if(passwordOutput.value === ""){
+        showToast("No hay contraseña para copiar", 1000, "error");
+        return;
+    }
+    passwordOutput.select();
+    navigator.clipboard.writeText(passwordOutput.value);
+    showToast("Contraseña copiada al portapapeles", 1000, "success");
+});
+
+function generatePassword(length) {
+    const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{};:,.<>?";
+    let pass = "";
+    for(let i=0; i<length; i++){
+        pass += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return pass;
+}
+
+// TOAST FUNCTIONS
+let toastTimeout;
+
+function showToast(message, duration = 3000, type = "success") {
+    const toast = document.getElementById("toast");
+    const msg = document.getElementById("toast-message");
+    const icon = document.getElementById("toast-icon");
+
+    msg.textContent = message;
+
+    // Definir tipo
+    toast.className = `toast show ${type}`;
+    if(type === "success") {
+        icon.textContent = "✔";
+    } else if(type === "error") {
+        icon.textContent = "✖";
+    } else {
+        icon.textContent = "";
+    }
+
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
+        toast.classList.remove("show");
+    }, duration);
+}
+
+function closeToast() {
+    const toast = document.getElementById("toast");
+    toast.classList.remove("show");
+    clearTimeout(toastTimeout);
+}
+
+
+
+</script>
+
+{% endblock %}

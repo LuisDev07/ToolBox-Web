@@ -1,0 +1,98 @@
+/* Contenedor principal */
+.error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    text-align: center;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.error-content {
+    background-color: #fff;
+    padding: 2rem 3rem;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    max-width: 500px;
+    width: 90%;
+}
+
+/* Gif animado */
+.error-gif {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 1rem;
+    animation: bounce 1.2s infinite alternate;
+}
+
+/* Títulos */
+.error-content h1 {
+    font-size: 4rem;
+    color: #2ccc74;
+    margin: 0.5rem 0;
+}
+
+.error-content p {
+    font-size: 1.2rem;
+    color: #555;
+    margin: 0.5rem 0;
+}
+
+.funny-msg {
+    font-style: italic;
+    color: #888;
+    margin-bottom: 1.5rem;
+}
+
+/* Botón */
+.btn-home {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, #2ccc74, #28a745);
+    border-radius: 12px;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-home:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-15px);
+    }
+}
+
+/* Responsivo */
+@media (max-width: 720px) {
+    .error-content h1 {
+        font-size: 3rem;
+    }
+
+    .error-gif {
+        width: 150px;
+        height: 150px;
+    }
+}

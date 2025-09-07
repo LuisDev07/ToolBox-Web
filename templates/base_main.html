@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="author" content="Luis Jop">
+    <meta name="description" content="web de herraminetas basicas">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'style/main.css' %}">
+    {% block extra_css %}{% endblock %}
+    <link rel="shortcut icon" href="{% static 'img/faveicon.ico' %}" type="image/x-icon">
+    <script src="{% static 'js/main.js' %}" defer></script>
+    <title>Toolbox Web</title>
+</head>
+
+<body>
+    <div class="body-contem">
+
+        <div id="barra"></div>
+
+        <header>
+            <div class="header-contem">
+                <h1><a href="{% url 'home' %}">Toolbox Web</a></h1>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <nav class="nav-menu" id="nav-menu">
+                    <ul>
+                        <nav class="main-nav">
+                            <ul>
+                                <li>
+                                    <a href="{% url 'home' %}">
+                                        <i class="fas fa-home"></i> Inicio
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'QR' %}">
+                                        <i class="fas fa-qrcode"></i> QR Generador
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'PS' %}">
+                                        <i class="fas fa-key"></i> Generador de Passwords
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+
+
+                    </ul>
+                </nav>
+                <div class="overlay" id="overlay"></div>
+            </div>
+        </header>
+
+        <main>
+            {% block content %}
+
+
+            {% endblock %}
+        </main>
+
+        <footer>
+            <p>Copyright © 2025 - Luis Jop</p>
+
+
+
+        </footer>
+
+    </div>
+</body>
+
+</html>

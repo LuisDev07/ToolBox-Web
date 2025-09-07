@@ -1,0 +1,291 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    /* 🎨 Colores */
+    --color-primario: #2ccc74;
+    --color-primario-oscuro: #23a861;
+    --color-secundario: #444;
+    --color-texto: #333;
+    --color-fondo: #f5f5f5;
+    --color-blanco: #ffffff;
+    --color-gris: #6c757d;
+    --sombra: 0 5px 15px rgba(0, 0, 0, 0.08);
+
+    /* 🔠 Tipografías */
+    --fuente-principal: "Poppins", "Segoe UI", "Roboto", sans-serif;
+    --fuente-secundaria: "Roboto", sans-serif;
+
+    
+    /* 📏 Tamaños fluidos */
+        --fs-h1: clamp(2rem, 1.5rem + 2vw, 3rem);
+        /* min 2rem, escala fluida, max 3rem */
+        --fs-h2: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+        --fs-h3: clamp(1.25rem, 0.9rem + 1vw, 2rem);
+        --fs-texto: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+        --fs-small: clamp(0.8rem, 0.7rem + 0.3vw, 1rem);
+}
+
+
+/*barra de scroll */
+html,
+body {
+    overflow: auto;
+    /* Mantiene el scroll funcional */
+    scrollbar-width: none;
+    /* Oculta en Firefox */
+    -ms-overflow-style: none;
+    /* Oculta en IE y Edge */
+}
+
+html::-webkit-scrollbar {
+    display: none;
+    /* Oculta en Chrome, Safari y Opera */
+}
+
+#barra {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background:var(--color-primario);
+    width: 0%;
+    height: 5px;
+    z-index: 9999;
+    transition: width 0.25s ease-out;
+   border-radius: 3px;
+    
+}
+
+
+
+
+
+body{
+    min-height: 100vh;
+    background: var(--color-fondo); 
+    color: var(--color-texto);
+    font-family: var(--fuente-principal);
+    line-height: 1.6;
+}
+
+/*manter el footer al final de la pagina*/
+.body-contem{
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
+}
+
+
+
+header {
+    width: 100%;
+    background: var(--color-blanco);
+    box-shadow: var(--sombra);
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.header-contem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    color: var(--color-texto);
+}
+
+.header-contem a {
+    text-decoration: none;
+    font-size: var(--fs-h1);
+    color: var(--color-primario);
+}
+
+
+
+/* Hamburguesa */
+.hamburger {
+    width: 30px;
+    height: 22px;
+    display: none;
+    /* solo se muestra en móvil */
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.hamburger span {
+    display: block;
+    height: 4px;
+    width: 100%;
+    background:var(--color-texto);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(4px, 8px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(4px, -8px);
+}
+
+/* Menu */
+.nav-menu {
+    display: flex;
+}
+
+.nav-menu ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.nav-menu a {
+    position: relative;
+    font-size: var(--fs-texto);
+    /* necesario para el ::after */
+    color: var(--color-primario-oscuro);
+    text-decoration: none;
+    font-size: 16px;
+    padding: 5px 0;
+    display: inline-block;
+    /* para que el scale funcione bien */
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* Línea oculta inicialmente */
+.nav-menu a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-primario);
+    transition: width 0.3s ease, left 0.3s ease;
+    transform: translateX(-50%);
+}
+
+/* Hover con scale y línea desde el centro */
+.nav-menu a:hover {
+    color: var(--color-primario);
+    transform: scale(1.1);
+}
+
+.nav-menu a:hover::after {
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 900;
+}
+
+/*estilos para el nontenido */
+main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+/* estilos footer */
+
+footer {
+    background:rgba(0, 0, 0, 0.8);
+    color: var(--color-blanco);
+    text-align: center;
+    padding: 15px 20px;
+    box-shadow: var(--sombra);
+}
+.footer-contem{
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-size: var(--fs-small);
+}
+
+
+/* Responsive móvil */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-menu {
+        position: fixed;
+        display: flex;
+        text-align: center;
+        top: 0;
+        right: -250px;
+        width: 250px;
+        height: 100vh;
+        background: var(--color-blanco);
+        flex-direction: column;
+        padding-top: 60px;
+        transition: right 0.3s ease;
+        z-index: 999;
+    }
+
+    .nav-menu.active {
+        right: 0;
+    }
+
+    .nav-menu ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    
+    .nav-menu a {
+        padding: 10px ;
+        color: var(--color-primario-oscuro);
+    }
+
+    .overlay.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    /* Hamburguesa siempre encima del menú lateral */
+    .hamburger {
+        z-index: 1001;
+        /* más alto que nav-menu (999) */
+        position: relative;
+    }
+
+    /* Menú lateral */
+    .nav-menu {
+        z-index: 999;
+        position: fixed;
+    }
+
+    /* Overlay */
+    .overlay {
+        z-index: 998;
+        /* debajo del menú y la hamburguesa */
+    }
+}

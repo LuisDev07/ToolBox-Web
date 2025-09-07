@@ -1,0 +1,253 @@
+{% extends 'base_main.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'style/QR.css' %}">
+
+
+{% endblock %}
+{% load base64_filters %}
+
+{% block content %}
+
+
+
+
+<div class="qr-container">
+    <h1>Generador de QR con Logo</h1>
+
+    <form id="qr-form" method="POST" class="qr-form">
+        {% csrf_token %}
+        <div class="input-group">
+            <input type="text" id="url-input" name="url" value="{{ url }}" placeholder="Ingresa la URL" required>
+            <button type="button" class="input-btn" id="paste-btn"><i class="fas fa-clipboard"></i></button>
+            <button type="button" class="input-btn" id="clear-btn"><i class="fas fa-times"></i></button>
+
+
+        </div>
+
+
+        <div class="logo-grid">
+            <p>Seleccione alguno de estos logos para el QR: </p>
+
+            <!-- Opción ninguno -->
+            <label class="logo-item">
+                <input type="radio" name="logo" value="" {% if not logo_name %}checked{% endif %}>
+                <img src="{% static 'img/logos/none.png' %}" alt="Ninguno" title="Sin logo">
+            </label>
+
+            {% for l in logos_data %}
+            <label class="logo-item">
+                <input type="radio" name="logo" value="{{ l.key }}" {% if l.checked %}checked{% endif %}>
+                <img src="{% static l.src %}" alt="{{ l.key }}">
+            </label>
+            {% endfor %}
+        </div>
+
+
+        <div class="submit-container">
+            <button type="submit" name="action" value="preview" class="generate-btn">
+                <i class="fas fa-qrcode"></i> Generar QR
+            </button>
+
+        </div>
+    </form>
+
+
+
+
+    {% if qr_img %}
+    <button id="btn-download" type="button">
+        <i class="fas fa-download"></i> Descargar QR
+    </button>
+    <div class="qr-container-result">
+        <div class="qr-preview">
+            <h3>Vista previa:</h3>
+            <img id="qr-preview-img" src="data:image/png;base64,{{ qr_img }}" alt="QR" />
+        </div>
+
+    </div>
+    {% endif %}
+
+
+
+
+</div>
+
+
+
+
+<!-- Modal oculto por defecto -->
+<div id="downloadModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3>Nombre del archivo QR</h3>
+        <input type="text" id="filenameInput" placeholder="mi_qr.png">
+        <button onclick="confirmDownload()"><i class="fas fa-download"></i> Descargar</button>
+    </div>
+</div>
+
+
+<!-- Toast -->
+<div id="toast" class="toast">
+    <span id="toast-icon"></span> <!-- ícono dinámico -->
+    <div id="toast-message"></div>
+    <div id="toast-progress"></div>
+    <button id="toast-close" onclick="closeToast()">✖</button>
+</div>
+
+
+<!-- Link invisible para descarga -->
+<a id="downloadLink" style="display:none;"></a>
+
+<script>
+
+
+    let toastTimeout;
+    let qrBlobToDownload = null;
+
+
+    //funcion para limpiar y pegar desde el portapapeles
+    const urlInput = document.getElementById("url-input");
+    const pasteBtn = document.getElementById("paste-btn");
+    const clearBtn = document.getElementById("clear-btn");
+
+    // Pegar desde portapapeles
+    pasteBtn.addEventListener("click", async () => {
+        try {
+            const text = await navigator.clipboard.readText();
+            urlInput.value = text;
+        } catch (err) {
+            alert("No se pudo acceder al portapapeles: " + err);
+        }
+    });
+
+    // Limpiar input
+    clearBtn.addEventListener("click", () => {
+        urlInput.value = "";
+    });
+
+    //funcion para mostrar el toast
+    function showToast(message, duration = 3000, type = "error") {
+        const toast = document.getElementById("toast");
+        const progress = document.getElementById("toast-progress");
+        const msg = document.getElementById("toast-message");
+        const icon = document.getElementById("toast-icon");
+
+        msg.textContent = message;
+
+        // Cambiar color y icono según tipo
+        if (type === "success") {
+            toast.style.border = "1px solid green";
+            toast.style.color = "green";
+            progress.style.backgroundColor = "green";
+            icon.textContent = "✅";
+        } else {
+            toast.style.border = "1px solid red";
+            toast.style.color = "red";
+            progress.style.backgroundColor = "red";
+            icon.textContent = "❌";
+        }
+
+        toast.classList.add("show");
+
+        // Reiniciar animación de barra
+        progress.style.animation = "none";
+        progress.offsetHeight; // reflow
+        progress.style.animation = `progress ${duration}ms linear forwards`;
+
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => {
+            toast.classList.remove("show");
+        }, duration);
+    }
+
+
+    function closeToast() {
+        const toast = document.getElementById("toast");
+        toast.classList.remove("show");
+        clearTimeout(toastTimeout);
+    }
+
+
+
+
+    // Modal
+    function openModal(blob) {
+        if (!blob) {
+            showToast("Primero debes generar un QR antes de descargar.", 3000, "error");
+
+            return;
+        }
+        qrBlobToDownload = blob;
+        document.getElementById("downloadModal").style.display = "block";
+        document.getElementById("filenameInput").value = "mi_qr.png";
+    }
+
+    function closeModal() {
+        document.getElementById("downloadModal").style.display = "none";
+    }
+
+    function confirmDownload() {
+        let filename = document.getElementById("filenameInput").value || "qr.png";
+        closeModal();
+        triggerDownload(qrBlobToDownload, filename);
+
+        // Mostrar toast de éxito
+        showToast("QR descargado correctamente!", 1000, "success");
+
+        qrBlobToDownload = null;
+
+        // Esperar 3 segundos antes de recargar la página
+        setTimeout(() => {
+            window.location.href = "{% url 'QR' %}";
+        }, 1000);
+    }
+
+
+
+    function triggerDownload(blob, filename) {
+        const link = document.getElementById("downloadLink");
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        link.click();
+        URL.revokeObjectURL(link.href);
+    }
+
+    // Función principal para descargar QR
+    function downloadQR() {
+        const qrPreview = document.getElementById("qr-preview-img");
+        if (!qrPreview) {
+            showToast("Primero debes generar un QR antes de descargar.", 3000, "error");
+
+            return;
+        }
+
+        const form = document.getElementById("qr-form");
+        const formData = new FormData(form);
+        formData.set("action", "download");
+
+        fetch("{% url 'QR' %}", { method: "POST", body: formData })
+            .then(res => res.blob())
+            .then(blob => openModal(blob))
+            .catch(err => showToast("Error al descargar: " + err));
+    }
+
+    // Asociar botón de descarga
+    document.getElementById("btn-download").addEventListener("click", downloadQR);
+
+    // Cerrar modal si el usuario da click fuera del contenido
+    window.onclick = function (event) {
+        const modal = document.getElementById("downloadModal");
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+
+
+   
+</script>
+
+
+
+{% endblock %}
