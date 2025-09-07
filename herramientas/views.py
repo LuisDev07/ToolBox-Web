@@ -21,7 +21,7 @@ LOGOS = {
     "facebook": "static/img/logos/facebook.png",
     "twitter": "static/img/logos/twitter.png",
     "tiktok": "static/img/logos/tiktok.png",
-    "instagram": "static/img/logos/instagram.png",
+    "instagram": "static/img/logos/Instagram.png",
     "linkedin": "static/img/logos/linkedin.png",
     "whatsapp": "static/img/logos/whatsapp.png",
     "telegram": "static/img/logos/telegram.png",
