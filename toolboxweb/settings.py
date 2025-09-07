@@ -140,3 +140,6 @@ if DEBUG:
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 else:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Configuración adicional para WhiteNoise en producción
+WHITENOISE_USE_FINDERS = True
