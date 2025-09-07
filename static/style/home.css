@@ -25,7 +25,8 @@
     max-width: 800px;
     margin: 80px auto;
     padding: 40px;
-    background: var(--color-blanco);
+    
+   background: var(--color-blanco);
     border-radius: 12px;
     box-shadow: var(--sombra);
     text-align: center;
@@ -35,7 +36,7 @@
 .inicio h1 {
     font-size: var(--fs-h1);
     font-weight: bold;
-    color: var(--color-primario);
+    color: var(--color-primario-oscuro);
     margin-bottom: 20px;
     font-weight: bold;
 }
