@@ -1,4 +1,4 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -20,14 +20,14 @@
     --fuente-principal: "Poppins", "Segoe UI", "Roboto", sans-serif;
     --fuente-secundaria: "Roboto", sans-serif;
 
-    
+
     /* 📏 Tamaños fluidos */
-        --fs-h1: clamp(2rem, 1.5rem + 2vw, 3rem);
-        /* min 2rem, escala fluida, max 3rem */
-        --fs-h2: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
-        --fs-h3: clamp(1.25rem, 0.9rem + 1vw, 2rem);
-        --fs-texto: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
-        --fs-small: clamp(0.8rem, 0.7rem + 0.3vw, 1rem);
+    --fs-h1: clamp(2rem, 1.5rem + 2vw, 3rem);
+    /* min 2rem, escala fluida, max 3rem */
+    --fs-h2: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+    --fs-h3: clamp(1.25rem, 0.9rem + 1vw, 2rem);
+    --fs-texto: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+    --fs-small: clamp(0.8rem, 0.7rem + 0.3vw, 1rem);
 }
 
 
@@ -47,33 +47,35 @@ html::-webkit-scrollbar {
     /* Oculta en Chrome, Safari y Opera */
 }
 
+
+
 #barra {
     position: fixed;
     top: 0;
     left: 0;
-    background:var(--color-primario);
+    background: var(--color-primario);
     width: 0%;
     height: 5px;
     z-index: 9999;
     transition: width 0.25s ease-out;
-   border-radius: 3px;
-    
+    border-radius: 3px;
+
 }
 
 
 
 
 
-body{
+body {
     min-height: 100vh;
-    background: var(--color-fondo); 
+    background: var(--color-fondo);
     color: var(--color-texto);
     font-family: var(--fuente-principal);
     line-height: 1.6;
 }
 
 /*manter el footer al final de la pagina*/
-.body-contem{
+.body-contem {
     display: grid;
     min-height: 100vh;
     grid-template-rows: auto 1fr auto;
@@ -123,7 +125,7 @@ header {
     display: block;
     height: 4px;
     width: 100%;
-    background:var(--color-texto);
+    background: var(--color-texto);
     border-radius: 2px;
     transition: all 0.3s ease;
 }
@@ -204,24 +206,28 @@ header {
 }
 
 /*estilos para el nontenido */
-main{
+main {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    max-width: 100%;
+    
+    box-sizing: border-box;
 }
 
 
 /* estilos footer */
 
 footer {
-    background:rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.8);
     color: var(--color-blanco);
     text-align: center;
     padding: 15px 20px;
     box-shadow: var(--sombra);
 }
-.footer-contem{
+
+.footer-contem {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -259,9 +265,9 @@ footer {
         gap: 10px;
     }
 
-    
+
     .nav-menu a {
-        padding: 10px ;
+        padding: 10px;
         color: var(--color-primario-oscuro);
     }
 

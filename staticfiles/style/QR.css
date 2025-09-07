@@ -212,8 +212,9 @@
 /*estios generales del contenedor*/
 .qr-container {
     max-width: 1200px;
-    margin: 25px auto;
-    padding:  30px;
+    margin: 0 auto;
+    padding:  0;
+    
     background: var(--color-fondo);
     text-align: center;
     display: flex;
@@ -235,7 +236,7 @@
 .qr-form {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 90%;
     max-width: 1000px;
     margin: 2rem auto;
     padding: 2rem;
@@ -450,12 +451,12 @@
 
 /* --- Responsivo para pantallas menores a 720px --- */
 @media (max-width: 720px) {
-    .qr-container {
+    /*.qr-container {
         padding: 15px;
-    }
+    }*/
 
     .qr-form {
-        padding: 1rem;
+        padding:1rem;
         margin: 1rem;
     }
 
